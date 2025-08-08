@@ -116,16 +116,19 @@ function App() {
         paused={paused}
         countdownLength={countdownLength}
       />
-      <RadioButtonComponent
-        noteSelection={noteSelection}
-        setNoteSelection={setNoteSelection}
-      />
+      <h2>Settings:</h2>
+      <h4>Change Timer:</h4>
       <ChangeTimerField
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
         paused={paused}
         countdownLength={countdownLength}
         setCountdownLength={setCountdownLength}
+      />
+      <h4>Select Notes:</h4>
+      <RadioButtonComponent
+        noteSelection={noteSelection}
+        setNoteSelection={setNoteSelection}
       />
     </div>
   );
