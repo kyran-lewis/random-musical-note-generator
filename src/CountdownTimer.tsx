@@ -25,7 +25,7 @@ function CountdownTimer({
         return () => clearInterval(interval);
       }
     }
-  });
+  }, [secondsLeft, paused]);
 
   function calculateTimeFraction() {
     const rawTimeFraction = secondsLeft / countdownLength;

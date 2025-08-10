@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./style.css";
-import RadioButtonComponent from "./RadioButtonComponent";
+import DropdownMenu from "./DropdownMenu";
 import CountdownTimer from "./CountdownTimer";
 import ChangeTimerField from "./ChangeTimerField";
 import Ab from "./assets/bass-sound-pack/Ab1.mp3";
@@ -185,23 +185,27 @@ function App() {
       {/* <button onClick={(e) => setPaused(!paused)}>
         {paused ? "Resume" : "Pause"}
       </button> */}
-      <button onClick={(e) => setSoundOn(!soundOn)}>
+      {/* <button onClick={(e) => setSoundOn(!soundOn)}>
         {soundOn ? "Turn Sound Off" : "Turn Sound On"}
-      </button>
+      </button> */}
       <h2>Settings:</h2>
-      <h4>Change Timer:</h4>
-      <ChangeTimerField
-        secondsLeft={secondsLeft}
-        setSecondsLeft={setSecondsLeft}
-        paused={paused}
-        countdownLength={countdownLength}
-        setCountdownLength={setCountdownLength}
-      />
-      <h4>Select Notes:</h4>
-      <RadioButtonComponent
-        noteSelection={noteSelection}
-        setNoteSelection={setNoteSelection}
-      />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h4>Change Timer:</h4>
+        <ChangeTimerField
+          secondsLeft={secondsLeft}
+          setSecondsLeft={setSecondsLeft}
+          paused={paused}
+          countdownLength={countdownLength}
+          setCountdownLength={setCountdownLength}
+        />
+      </div>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h4>Select Notes:</h4>
+        <DropdownMenu
+          noteSelection={noteSelection}
+          setNoteSelection={setNoteSelection}
+        />
+      </div>
     </div>
   );
 }

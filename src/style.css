@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:regular,bold,italic&subset=latin,latin-ext");
+
 body {
   margin: 0;
   padding: 0;
   /* TODO: use Inter google font, requires extra imports*/
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter";
 }
 
 .main {
@@ -15,7 +17,21 @@ body {
 }
 
 h1 {
-  font-size: 48px;
+  font-size: 72px;
+  margin: 0;
+  padding: 12px;
+}
+
+button {
+  border: 0;
+  margin: 0;
+  font-family: "Inter";
+  background-color: black;
+  color: white;
+  padding: 12px 24px;
+  font-size: 24px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 /* Sets the containers height and width */
@@ -55,7 +71,7 @@ h1 {
   justify-content: center;
 
   /* Sort of an arbitrary number; adjust to your liking */
-  font-size: 32px;
+  font-size: 36px;
   font-weight: bold;
 }
 
