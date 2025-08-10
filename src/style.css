@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  /* TODO: use Inter google font, requires extra imports*/
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -23,6 +24,7 @@ h1 {
   position: relative;
   height: 100px;
   width: 100px;
+  cursor: pointer;
 }
 
 /* Removes SVG styling that would hide the time label */
@@ -34,7 +36,7 @@ h1 {
 /* The SVG path that displays the timer's progress */
 .base-timer__path-elapsed {
   stroke-width: 7px;
-  stroke: grey;
+  stroke: white;
 }
 
 .base-timer__label {
@@ -54,6 +56,7 @@ h1 {
 
   /* Sort of an arbitrary number; adjust to your liking */
   font-size: 32px;
+  font-weight: bold;
 }
 
 .change-timer input {
@@ -75,7 +78,7 @@ h1 {
   transition: 1s linear all;
 
   /* Allows the ring to change color when the color value updates */
-  stroke: green;
+  stroke: black;
 
   fill: none;
 }

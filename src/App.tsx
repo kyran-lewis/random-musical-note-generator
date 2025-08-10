@@ -47,6 +47,27 @@ function App() {
     "G#",
     "Ab",
   ];
+
+  const ALL_DIATONIC_NOTES_AUDIO = [
+    A,
+    Bb,
+    Bb,
+    B,
+    C,
+    Db,
+    Db,
+    D,
+    Eb,
+    Eb,
+    E,
+    F,
+    Gb,
+    Gb,
+    G,
+    Ab,
+    Ab,
+  ];
+
   const ONLY_SHARPS = [
     "A",
     "A#",
@@ -61,6 +82,8 @@ function App() {
     "G",
     "G#",
   ];
+  const ONLY_SHARPS_AUDIO = [A, Bb, B, C, Db, D, Eb, E, F, Gb, G, Ab];
+
   const ONLY_FLATS = [
     "Ab",
     "A",
@@ -128,7 +151,14 @@ function App() {
   useEffect(() => {
     if (soundOn && secondsLeft == 0) {
       let noteToPlay = A;
-      if (noteSelection === "onlyFlats") {
+      // TODO: Diatonic notes will be more difficult as sharps and flats will have the same audio file but the array is longer
+      if (noteSelection == "all") {
+        noteToPlay =
+          ALL_DIATONIC_NOTES_AUDIO[ALL_DIATONIC_NOTES.indexOf(currentNote)];
+        console.log(noteToPlay);
+      } else if (noteSelection == "onlySharps") {
+        noteToPlay = ONLY_SHARPS_AUDIO[ONLY_SHARPS.indexOf(currentNote)];
+      } else if (noteSelection == "onlyFlats") {
         noteToPlay = ONLY_FLATS_AUDIO[ONLY_FLATS.indexOf(currentNote)];
       } else {
         noteToPlay = NATURAL_NOTES_AUDIO[NATURAL_NOTES.indexOf(currentNote)];
@@ -141,23 +171,23 @@ function App() {
 
   return (
     <div className="main">
-      <h1 style={{ color: secondsLeft > 0 ? "black" : "red" }}>
-        {currentNote}
-      </h1>
-      <button onClick={changeNote}>Change Note</button>
-      <button onClick={(e) => setPaused(!paused)}>
-        {paused ? "Resume" : "Pause"}
-      </button>
-      <button onClick={(e) => setSoundOn(!soundOn)}>
-        {soundOn ? "Turn Sound Off" : "Turn Sound On"}
-      </button>
-
       <CountdownTimer
         secondsLeft={secondsLeft}
         setSecondsLeft={setSecondsLeft}
         paused={paused}
+        setPaused={setPaused}
         countdownLength={countdownLength}
       />
+      <h1 style={{ color: secondsLeft > 0 ? "black" : "red" }}>
+        {currentNote}
+      </h1>
+      <button onClick={changeNote}>Change Note</button>
+      {/* <button onClick={(e) => setPaused(!paused)}>
+        {paused ? "Resume" : "Pause"}
+      </button> */}
+      <button onClick={(e) => setSoundOn(!soundOn)}>
+        {soundOn ? "Turn Sound Off" : "Turn Sound On"}
+      </button>
       <h2>Settings:</h2>
       <h4>Change Timer:</h4>
       <ChangeTimerField

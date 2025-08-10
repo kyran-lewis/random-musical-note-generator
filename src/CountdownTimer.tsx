@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import PauseIcon from "./assets/pause.svg";
 
 function CountdownTimer({
   secondsLeft,
   setSecondsLeft,
   paused,
+  setPaused,
   countdownLength,
 }: any) {
   const FULL_DASH_ARRAY = 283;
@@ -24,8 +26,6 @@ function CountdownTimer({
       }
     }
   });
-
-  console.log(circleDashArray);
 
   function calculateTimeFraction() {
     const rawTimeFraction = secondsLeft / countdownLength;
@@ -50,7 +50,7 @@ function CountdownTimer({
   const remainingPathColor = "green";
 
   return (
-    <div className="base-timer">
+    <div className="base-timer" onClick={() => setPaused(!paused)}>
       <svg
         className="base-timer__svg"
         viewBox="0 0 100 100"
@@ -75,7 +75,13 @@ function CountdownTimer({
         ></path>
       </svg>
       <span id="base-timer-label" className="base-timer__label">
-        {secondsLeft < 0 ? "0" : secondsLeft}
+        {paused ? (
+          <img width={"25px"} height={"25px"} src={PauseIcon} />
+        ) : secondsLeft < 0 ? (
+          "0"
+        ) : (
+          secondsLeft
+        )}
       </span>
     </div>
   );
