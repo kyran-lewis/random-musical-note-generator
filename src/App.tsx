@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./style.css";
 import DropdownMenu from "./DropdownMenu";
 import CountdownTimer from "./CountdownTimer";
@@ -27,82 +25,118 @@ import G from "./assets/bass-sound-pack/G1.mp3";
 // import Ab1 from "./assets/bass-sound-pack/Ab1.mp3";
 // import Ab1 from "./assets/bass-sound-pack/Ab1.mp3";
 
+interface AudioCache {
+  [key: string]: HTMLAudioElement;
+}
+
+const ALL_DIATONIC_NOTES = [
+  "A",
+  "A#",
+  "Bb",
+  "B",
+  "C",
+  "C#",
+  "Db",
+  "D",
+  "D#",
+  "Eb",
+  "E",
+  "F",
+  "F#",
+  "Gb",
+  "G",
+  "G#",
+  "Ab",
+];
+
+const ALL_DIATONIC_NOTES_AUDIO_CACHE: AudioCache = {
+  A: new Audio(A),
+  Bb: new Audio(Bb),
+  B: new Audio(B),
+  C: new Audio(C),
+  Db: new Audio(Db),
+  D: new Audio(D),
+  Eb: new Audio(Eb),
+  E: new Audio(E),
+  F: new Audio(F),
+  Gb: new Audio(Gb),
+  G: new Audio(G),
+  Ab: new Audio(Ab),
+};
+
+const ONLY_SHARPS = [
+  "A",
+  "A#",
+  "B",
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+];
+
+const ONLY_SHARPS_AUDIO_CACHE: AudioCache = {
+  A: new Audio(A),
+  "A#": new Audio(Bb),
+  B: new Audio(B),
+  C: new Audio(C),
+  "C#": new Audio(Db),
+  D: new Audio(D),
+  "D#": new Audio(Eb),
+  E: new Audio(E),
+  F: new Audio(F),
+  "F#": new Audio(Gb),
+  G: new Audio(G),
+  "G#": new Audio(Ab),
+};
+
+const ONLY_FLATS = [
+  "Ab",
+  "A",
+  "Bb",
+  "B",
+  "C",
+  "Db",
+  "D",
+  "Eb",
+  "E",
+  "F",
+  "Gb",
+  "G",
+];
+
+const ONLY_FLATS_AUDIO_CACHE: AudioCache = {
+  A: new Audio(A),
+  Bb: new Audio(Bb),
+  B: new Audio(B),
+  C: new Audio(C),
+  Db: new Audio(Db),
+  D: new Audio(D),
+  Eb: new Audio(Eb),
+  E: new Audio(E),
+  F: new Audio(F),
+  Gb: new Audio(Gb),
+  G: new Audio(G),
+  Ab: new Audio(Ab),
+};
+
+const NATURAL_NOTES = ["A", "B", "C", "D", "E", "F", "G"];
+
+const NATURAL_NOTES_AUDIO_CACHE: AudioCache = {
+  A: new Audio(A),
+  B: new Audio(B),
+  C: new Audio(C),
+  D: new Audio(D),
+  E: new Audio(E),
+  F: new Audio(F),
+  G: new Audio(G),
+};
+
 function App() {
-  const ALL_DIATONIC_NOTES = [
-    "A",
-    "A#",
-    "Bb",
-    "B",
-    "C",
-    "C#",
-    "Db",
-    "D",
-    "D#",
-    "Eb",
-    "E",
-    "F",
-    "F#",
-    "Gb",
-    "G",
-    "G#",
-    "Ab",
-  ];
-
-  const ALL_DIATONIC_NOTES_AUDIO = [
-    A,
-    Bb,
-    Bb,
-    B,
-    C,
-    Db,
-    Db,
-    D,
-    Eb,
-    Eb,
-    E,
-    F,
-    Gb,
-    Gb,
-    G,
-    Ab,
-    Ab,
-  ];
-
-  const ONLY_SHARPS = [
-    "A",
-    "A#",
-    "B",
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-  ];
-  const ONLY_SHARPS_AUDIO = [A, Bb, B, C, Db, D, Eb, E, F, Gb, G, Ab];
-
-  const ONLY_FLATS = [
-    "Ab",
-    "A",
-    "Bb",
-    "B",
-    "C",
-    "Db",
-    "D",
-    "Eb",
-    "E",
-    "F",
-    "Gb",
-    "G",
-  ];
-  const ONLY_FLATS_AUDIO = [Ab, A, Bb, B, C, Db, D, Eb, E, F, Gb, G];
-
-  const NATURAL_NOTES = ["A", "B", "C", "D", "E", "F", "G"];
-  const NATURAL_NOTES_AUDIO = [A, B, C, D, E, F, G];
-
   const [currentNote, setCurrentNote] = useState("");
   const [noteSelection, setNoteSelection] = useState("all");
 
@@ -117,17 +151,17 @@ function App() {
       setCurrentNote(
         ALL_DIATONIC_NOTES[
           Math.floor(Math.random() * ALL_DIATONIC_NOTES.length)
-        ]
+        ],
       );
     } else if (noteSelection === "onlySharps") {
       setCurrentNote(
-        ONLY_SHARPS[Math.floor(Math.random() * ONLY_SHARPS.length)]
+        ONLY_SHARPS[Math.floor(Math.random() * ONLY_SHARPS.length)],
       );
     } else if (noteSelection === "onlyFlats") {
       setCurrentNote(ONLY_FLATS[Math.floor(Math.random() * ONLY_FLATS.length)]);
     } else {
       setCurrentNote(
-        NATURAL_NOTES[Math.floor(Math.random() * NATURAL_NOTES.length)]
+        NATURAL_NOTES[Math.floor(Math.random() * NATURAL_NOTES.length)],
       );
     }
     setSecondsLeft(countdownLength);
@@ -149,21 +183,19 @@ function App() {
   }, [noteSelection]);
 
   useEffect(() => {
+    console.log(soundOn, secondsLeft, soundOn && secondsLeft == 0);
     if (soundOn && secondsLeft == 0) {
-      let noteToPlay = A;
-      // TODO: Diatonic notes will be more difficult as sharps and flats will have the same audio file but the array is longer
+      let audio: HTMLAudioElement;
       if (noteSelection == "all") {
-        noteToPlay =
-          ALL_DIATONIC_NOTES_AUDIO[ALL_DIATONIC_NOTES.indexOf(currentNote)];
-        console.log(noteToPlay);
+        audio = ALL_DIATONIC_NOTES_AUDIO_CACHE[currentNote];
       } else if (noteSelection == "onlySharps") {
-        noteToPlay = ONLY_SHARPS_AUDIO[ONLY_SHARPS.indexOf(currentNote)];
+        audio = ONLY_SHARPS_AUDIO_CACHE[currentNote];
       } else if (noteSelection == "onlyFlats") {
-        noteToPlay = ONLY_FLATS_AUDIO[ONLY_FLATS.indexOf(currentNote)];
+        audio = ONLY_FLATS_AUDIO_CACHE[currentNote];
       } else {
-        noteToPlay = NATURAL_NOTES_AUDIO[NATURAL_NOTES.indexOf(currentNote)];
+        audio = NATURAL_NOTES_AUDIO_CACHE[currentNote];
       }
-      const audio = new Audio(noteToPlay);
+
       audio.volume = 1;
       audio.play();
     }
@@ -185,9 +217,9 @@ function App() {
       {/* <button onClick={(e) => setPaused(!paused)}>
         {paused ? "Resume" : "Pause"}
       </button> */}
-      {/* <button onClick={(e) => setSoundOn(!soundOn)}>
+      <button onClick={(e) => setSoundOn(!soundOn)}>
         {soundOn ? "Turn Sound Off" : "Turn Sound On"}
-      </button> */}
+      </button>
       <h2>Settings:</h2>
       <div style={{ display: "flex", alignItems: "center" }}>
         <h4>Change Timer:</h4>
